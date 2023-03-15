@@ -1,1 +1,0 @@
-import { SETTINGS } from 'settings';

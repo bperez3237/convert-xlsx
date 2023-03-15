@@ -1,4 +1,0 @@
-[test]
-{{ cookiecutter.test_host }}
-
-[live]
