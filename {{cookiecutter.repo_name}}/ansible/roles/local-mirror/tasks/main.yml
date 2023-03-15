@@ -1,0 +1,24 @@
+- name: "Run preparation script"
+  shell: "bash mirror-prepare.sh"
+  delegate_to: localhost
+  vars:
+    ansible_become: no
+  tags:
+    - media
+    - files
+    - db
+    - database
+
+
+- name: "Mirror the media files"
+  import_tasks: mirror_media.yml
+  tags:
+    - media
+    - files
+
+
+- name: "Mirror the DB"
+  import_tasks: mirror_db.yml
+  tags:
+    - db
+    - database

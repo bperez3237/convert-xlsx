@@ -1,0 +1,13 @@
+.idea/
+.python-version
+yarn-error.log
+*.mo
+*.pyo
+*.pyc
+.cache
+.pytest_cache
+venv/
+.venv/
+.nvmrc
+codemods/frontend/node_modules/
+.python-version

@@ -1,0 +1,6 @@
+- name: "Update nginx config"
+  import_tasks: ../../helpers/update-nginx-config.yml
+
+
+- name: "Reload nginx"
+  import_tasks: ../../helpers/reload-nginx.yml

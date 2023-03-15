@@ -1,0 +1,44 @@
+.env
+.idea/
+# pyenv local python version
+.python-version
+
+*.mo
+*.pyo
+*.pyc
+.sass-cache/
+yarn-error.log
+node_modules/
+venv/
+.cache/
+
+.data*/
+
+{{cookiecutter.repo_name}}/settings/local.py
+{{cookiecutter.repo_name}}/settings/local_test.py
+{{cookiecutter.repo_name}}/db.sqlite3
+{{cookiecutter.repo_name}}/assets/
+{%- if cookiecutter.frontend_style == WEBAPP %}
+webapp/webapp/build/
+webapp/coverage/
+webapp/webapp/webpack-stats.json
+{% endif %}
+
+{{cookiecutter.repo_name}}/.cache
+{{cookiecutter.repo_name}}/.pytest_cache
+{{cookiecutter.repo_name}}/.coverage
+{{cookiecutter.repo_name}}/coverage
+{{cookiecutter.repo_name}}/coverage.xml
+{{cookiecutter.repo_name}}/report.xml
+{{cookiecutter.repo_name}}/htmlcov/
+{{cookiecutter.repo_name}}/cover/
+
+{%- if cookiecutter.frontend_style == SPA %}
+# Node Project files
+app/build/
+app/cache/
+app/coverage/
+
+# Missing translations file
+**/locales/**/*.missing.json
+{%- endif %}

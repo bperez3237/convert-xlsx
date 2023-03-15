@@ -1,0 +1,148 @@
+# You can also use the fallback image from docker hub: thorgate/django-template-base-ci:latest
+image: registry.gitlab.com/thorgate-public/django-project-template/base-ci:latest
+
+services:
+  - docker:dind
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_BUILDKIT: "1"
+  COMPOSE_DOCKER_CLI_BUILD: "1"
+  POETRY_VIRTUALENVS_CREATE: "1"
+
+before_script:
+  - poetry config cache-dir ${CI_PROJECT_DIR}/.cache
+  - git config --global user.email "foo@bar.baz"
+  - git config --global user.name "Foo Bar"
+  - git config --global init.defaultBranch master
+  # See the following issue for reasoning: https://gitlab.com/gitlab-org/gitlab-ce/issues/41227
+  - export SHARED_PATH="$(dirname ${CI_PROJECT_DIR})/shared"
+  - export TPL_PLAYGROUND="${SHARED_PATH}/tpl-playground"
+  - mkdir -p $TPL_PLAYGROUND
+
+stages:
+  - test
+  # Since CI image publish job only runs from protected branches then new changes to CI
+  #  docker image must be introduced separately from other features. We could move it
+  #  to be the first stage but that would only work for changes merged into the main
+  #  branches.
+  #
+  # Note: When you do change the order here consider that:
+  # - publish-ci-image.sh always tags the image as latest
+  # - you might need to run publish_ci_image for all branches
+  - publish_ci_image
+
+.test_tag:
+  stage: test
+  except:
+    - schedules
+  script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - poetry install
+    - export ENV_FOLDER=`poetry env list | cut -f 1 -d ' '`
+    - export VIRTUAL_ENV="${CI_PROJECT_DIR}/.cache/virtualenvs/${ENV_FOLDER}"
+    - export PATH="${VIRTUAL_ENV}/bin:${PATH}"
+    - pytest -E ${TEST_TAG} --maxfail=1 -v
+  cache:
+    key: ci-python-cache
+    paths:
+      - ${CI_PROJECT_DIR}/.cache/virtualenvs
+
+
+test_main:
+  extends: .test_tag
+  variables:
+    TEST_TAG: main
+
+test_CELERY:
+  extends: .test_tag
+  variables:
+    TEST_TAG: CELERY
+
+test_STORYBOOK:
+  extends: .test_tag
+  variables:
+    TEST_TAG: STORYBOOK
+
+test_SPA:
+  extends: .test_tag
+  variables:
+    TEST_TAG: SPA
+
+test_debian_SPA:
+  extends: .test_tag
+  variables:
+    TEST_TAG: DEBIAN_SPA
+
+test_debian_WEBAPP:
+  extends: .test_tag
+  variables:
+    TEST_TAG: DEBIAN_WEBAPP
+
+test_mypy_WEBAPP:
+  extends: .test_tag
+  variables:
+    TEST_TAG: MYPY_WEBAPP
+
+test_mypy_SPA:
+  extends: .test_tag
+  variables:
+    TEST_TAG: MYPY_SPA
+
+test_cypress_spa:
+  extends: .test_tag
+  variables:
+    TEST_TAG: CYPRESS_SPA
+
+test_cypress_webapp:
+  extends: .test_tag
+  variables:
+    TEST_TAG: CYPRESS_WEBAPP
+
+test_auto_deploy_generation:
+  extends: .test_tag
+  variables:
+    TEST_TAG: AUTO_DEPLOY
+
+test_frontend_codemods:
+  stage: test
+  image: node:12
+  except:
+    - schedules
+  before_script: []
+  cache:
+    key:
+      files:
+        - codemods/frontend/package.json
+    paths:
+      - codemods/frontend/node_modules
+  script:
+    - cd codemods/frontend
+    - yarn install
+    - yarn test
+
+publish_ci_image:
+  stage: publish_ci_image
+  image: docker:latest
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - apk add bash
+  only:
+    - master
+    - spa
+    - schedules
+  script:
+    - ./utils/publish-ci-image.sh ci Dockerfile-ci
+
+publish_base_ci_image:
+  stage: publish_ci_image
+  image: docker:latest
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - apk add bash
+  only:
+    - master
+    - spa
+    - schedules
+  script:
+    - ./utils/publish-ci-image.sh base-ci Dockerfile-base-ci

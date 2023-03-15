@@ -1,0 +1,188 @@
+- name: "Create needed directories {{ "{{ code_dir }}" }}"
+  file:
+      path: "{{ "{{ item }}" }}"
+      state: directory
+  loop:
+      - "/var/log/{{ "{{ project }}" }}"
+
+
+- name: "Checkout the code"
+  git:
+    repo: "{{ "{{ repository }}" }}"
+    dest: "{{ "{{ code_dir }}" }}{% if cookiecutter.build_in_ci == YES %}/repository{% endif %}"
+    version: "{{ "{% if force_deploy is defined %}{{ force_deploy }}{% else %}{{ deployment_version }}{% endif %}" }}"
+    update: yes
+    # force=yes will discard any changes in working directory
+    # force: yes
+
+
+# - {% if cookiecutter.build_in_ci == YES %}
+- name: "Get the commit id"
+  command: "git rev-parse HEAD"
+  args:
+      chdir: "{{ "{{ code_dir }}" }}/repository"
+  register: git_commit_sha
+# - {% endif %}
+
+
+- name: "Check if database has been created previously"
+  stat:
+      path: "{{ "{{ code_dir }}" }}/database.lock"
+  register: db_created
+
+
+- name: "Create database"
+  shell: >
+      echo "
+        CREATE DATABASE {{ "{{ project }}" }};
+        CREATE USER {{ "{{ project }}" }} WITH password '{{ "{{ django_database_password | mandatory }}" }}';
+        GRANT ALL PRIVILEGES ON DATABASE {{ "{{ project }}" }} to {{ "{{ project }}" }};
+      " | docker exec -i postgres-{{ "{{ postgres_version | mandatory }}" }} psql -U postgres
+  when: not db_created.stat.exists
+
+- name: "Create database extensions"
+  shell: >
+    echo "
+      CREATE EXTENSION IF NOT EXISTS citext;
+    " | docker exec -i postgres-{{ "{{ postgres_version | mandatory }}" }} psql -U postgres -d {{ "{{ project }}" }}
+  when: not db_created.stat.exists
+
+
+- name: "Create db creation lockfile"
+  file:
+      path: "{{ "{{ code_dir }}" }}/database.lock"
+      state: touch
+  when: not db_created.stat.exists
+
+
+- name: "Install/update .env file"
+  template:
+      src: environment
+      dest: "{{ "{{ code_dir }}" }}/.env"
+      mode: 0600
+      backup: yes
+  tags:
+    - env
+
+
+# - {%- if cookiecutter.build_in_ci == YES %}
+- name: "Create a helper script for sourcing to interface with container registry"
+  template:
+    src: registry.sh
+    dest: "{{ "{{ code_dir }}" }}/registry.sh"
+
+
+- name: "Ensure server has access to the container registry"
+  shell:
+    cmd: echo "$REGISTRY_TOKEN" | docker login -u {{ "{{ project }}" }} --password-stdin registry.gitlab.com
+    chdir: "{{ "{{ code_dir }}" }}"
+  environment:
+    DOCKER_CONFIG: "{{ "{{ code_dir }}" }}/.docker-cfg"
+    REGISTRY_TOKEN: "{{ "{{ registry_token }}" }}"
+
+
+# - {%- endif %}
+- name: "Create logrotate.conf file"
+  template:
+      src: "logrotate.conf"
+      dest: "/etc/logrotate.d/{{ "{{ project }}" }}"
+
+
+- name: "Ensure docker networks exist"
+  docker_network:
+      name: "{{ "{{ item }}" }}"
+  loop:
+      - "{{ "{{ project }}" }}_default"
+      - "{{ "{{ project }}" }}_nginx"
+      - "{{ "{{ project }}" }}_postgres"
+
+
+- name: "Attach shared containers to project specific networks"
+  shell:
+      cmd: >-
+        docker inspect {{ "{{ item.container }}" }}
+        {{ "{% raw %}--format='{{range $k,$v := .NetworkSettings.Networks}}{{println $k}}{{end}}'{% endraw %}" }}
+        | grep {{ "{{ item.name }}" }}
+        || docker network connect {{ "{{ item.name }} {{ item.container }}" }}
+  loop:
+      - name: "{{ "{{ project }}" }}_nginx"
+        container: nginx
+      - name: "{{ "{{ project }}" }}_postgres"
+        container: "postgres-{{ "{{ postgres_version }}" }}"
+
+
+# - {% if cookiecutter.build_in_ci == YES %}
+- name: "Copy compose file"
+  copy:
+    src: "{{ "{{ code_dir }}" }}/repository/{{ "{{ compose_file }}" }}"
+    dest: "{{ "{{ code_dir }}" }}/docker-compose.yml"
+    remote_src: true
+
+
+# - {%- endif %}
+- name: "Build the project"
+  shell:
+    cmd: >-
+      docker-compose
+# - {% if cookiecutter.build_in_ci == NO %}
+           -f {{ "{{ compose_file }}" }}
+# - {% endif %}
+      up --build --detach --no-color --force-recreate --remove-orphans
+    chdir: "{{ "{{ code_dir }}" }}"
+# - {%- if cookiecutter.build_in_ci == YES %}
+  environment:
+    DOCKER_CONFIG: "{{ "{{ code_dir }}" }}/.docker-cfg"
+# - {%- endif %}
+  register: result
+
+
+# Print the build output
+- debug:
+    var: result
+
+
+- name: "Run migrations"
+  import_tasks: ../../helpers/run-management-command.yml
+  vars:
+    command_params: "migrate --noinput"
+
+# - {%- if cookiecutter.frontend_style == SPA %}
+
+
+- name: "Run export assets"
+# -   {%- if cookiecutter.build_in_ci == YES %}
+  command: "docker-compose run --rm node yarn export-assets"
+# -   {%- else %}
+  command: "docker-compose -f {{ "{{ compose_file }}" }} run --rm node yarn export-assets"
+# -   {%- endif %}
+  args:
+      chdir: "{{ "{{ code_dir }}" }}"
+# - {%- endif %}
+
+
+- name: "Run collectstatic"
+  import_tasks: ../../helpers/run-management-command.yml
+  vars:
+    command_params: "collectstatic --noinput --ignore styles-src"
+
+
+- name: "Run system checks"
+  import_tasks: ../../helpers/run-management-command.yml
+  vars:
+    command_params: "check --deploy"
+
+
+# - {% if cookiecutter.thorgate == NO %}
+- name: "Set up shared nginx files"
+  import_tasks: nginx_shared.yml
+
+
+# - {%- endif %}
+- name: "Set up certificates"
+  import_tasks: letsencrypt.yml
+
+
+- name: "Update nginx config"
+  import_tasks: nginx.yml
+  tags:
+    - nginx
