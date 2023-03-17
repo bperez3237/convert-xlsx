@@ -1,0 +1,11 @@
+.navbar {
+  display: flex;
+}
+.navbar .navbar-logo {
+  background-color: #000;
+}
+.navbar .navbar-links {
+  color: red;
+  display: flex;
+  flex-direction: row;
+}/*# sourceMappingURL=style.css.map */

@@ -5,6 +5,7 @@ import './App.css';
 import LoginPage from '../../pages/LoginPage.js';
 import HomePage from '../../pages/HomePage.js';
 import { logoutUser } from '../../api/auth.js';
+import Navbar from '../Navbar/Navbar.tsx';
 
 import {
   BrowserRouter as Router,
@@ -14,10 +15,11 @@ import {
 
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({'user':'user1'});
   const isUserLoggedIn = () => {
     return !!user;
   }
+
   const logout = (event) => {
     event.preventDefault();
     logoutUser();
@@ -29,7 +31,8 @@ function App() {
   */
   return (
     <div className="App">
-      <UserContext.Provider value={{user, setUser, isUserLoggedIn}}>
+      {/* <UserContext.Provider value={{user, setUser, isUserLoggedIn}}> */}
+        <Navbar />
         <Router>
           <Switch>
               <Route exact path="/login">
@@ -40,8 +43,7 @@ function App() {
               </Route>
             </Switch>
         </Router>
-
-      </UserContext.Provider>
+      {/* </UserContext.Provider> */}
     </div>
   );
 }
