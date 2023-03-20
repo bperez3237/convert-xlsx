@@ -25,6 +25,7 @@ function App() {
   const isUserLoggedIn = () => {
     return !!user;
   }
+  
   const logout = (event) => {
     event.preventDefault();
     logoutUser();
@@ -32,21 +33,21 @@ function App() {
   }
 
 
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const data = await fetch('http://127.0.0.1:8000/users');
-      const users = await data.json();
-      setUsers(users);
-    }
+  // useEffect(() => {
+  //   const fetchUsers = async () => {
+  //     const data = await fetch('http://127.0.0.1:8000/users');
+  //     const users = await data.json();
+  //     setUsers(users);
+  //   }
   
-    fetchUsers()
-      .catch(console.error)
-  }, []);
+  //   fetchUsers()
+  //     .catch(console.error)
+  // }, []);
 
 
-  console.log(users)
+  // console.log(users)
 //   const history = useHistory();
  
 //   useEffect(() => {

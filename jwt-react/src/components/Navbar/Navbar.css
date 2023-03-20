@@ -1,5 +1,6 @@
 .Navbar {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 0 2rem;
     background-color: var(--main-background-color);
@@ -8,6 +9,7 @@
     font-weight: bold;
     font-size: 1.75rem;
 }
+
 
 a {
     color: var(--accent-text-color);

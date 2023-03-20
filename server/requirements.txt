@@ -6,3 +6,6 @@ djangorestframework-simplejwt==4.6.0
 PyJWT==2.0.1
 pytz==2021.1
 sqlparse==0.4.1
+xlsxwriter==3.0.9
+pandas==1.5.3
+openpyxl==3.1.2
