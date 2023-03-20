@@ -30,21 +30,21 @@ function App() {
   }
 
 
-  const [accounts, setAccounts] = useState([]);
+  const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    const fetchAccounts = async () => {
-      const data = await fetch('http://127.0.0.1:8000/accounts');
-      const accounts = await data.json();
-      setAccounts(accounts);
+    const fetchUsers = async () => {
+      const data = await fetch('http://127.0.0.1:8000/users');
+      const users = await data.json();
+      setUsers(users);
     }
   
-    fetchAccounts()
+    fetchUsers()
       .catch(console.error)
   }, []);
 
 
-  console.log(accounts)
+  console.log(users)
 //   const history = useHistory();
  
 //   useEffect(() => {

@@ -4,18 +4,18 @@
 
 
 :root {
-  --main-background-color: #160f38;
-  --main-background-color-muted: #291f58;
-  --secondary--background-color: #ffea00;
+  --main-background-color: #14380f;
+  --main-background-color-muted: #303b2e;
+  --secondary--background-color: #ffffff;
   --secondary--background-color-muted: #f6f3e3;
 
-  --accent-text-color: #ffea00;
+  --accent-text-color: #319636;
   --main-text-color: #fffdf2;
   --main-text-color-muted: #8f8ba9;
-  --secondary-text-color: #160f38;
-  --secondary-text-color-muted: #291f58;
+  --secondary-text-color: #14380f;
+  --secondary-text-color-muted: #303b2e;
 
-  --border-color: #514682;
+  --border-color: #1f271d;
 
   --nav-height: 3.5rem;
 }
