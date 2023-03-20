@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'public',
-    'xlsx',
+    'api',
 ]
 
 REST_FRAMEWORK = {

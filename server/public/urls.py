@@ -4,7 +4,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from rest_framework import routers
 router = routers.DefaultRouter()
-# router.register('ping', views.PingViewSet, basename="ping")
+router.register('ping', views.PingViewSet, basename="ping")
 
 urlpatterns = [
     path('api/token/access/', TokenRefreshView.as_view(), name='token_get_access'),
