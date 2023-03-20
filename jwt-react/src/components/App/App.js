@@ -13,8 +13,10 @@ import {
   useParams
 } from "react-router-dom";
 import Navbar from '../Navbar/Navbar.js';
-import CreatePage from '../../pages/CreatePage.js';
-import AccountPage from '../../pages/AccountPage.js';
+import PricingPage from '../../pages/PricingPage.js';
+import FaqPage from '../../pages/FaqPage.js';
+import SupportPage from '../../pages/SupportPage.js';
+import ApiDocsPage from '../../pages/ApiDocsPage.js';
 
 
 function App() {
@@ -67,12 +69,21 @@ function App() {
           <Route exact path="/">
             <HomePage/>
           </Route>
-          <Route exact path='/create-page'>
-            <CreatePage />
+          <Route path="/pricing">
+            <PricingPage />
           </Route>
-          <Route exact path='/account-page/:id'>
+          <Route path='/faq'>
+            <FaqPage />
+          </Route>
+          <Route path="/support">
+            <SupportPage />
+          </Route>
+          <Route path="/api-docs">
+            <ApiDocsPage />
+          </Route>
+          {/* <Route exact path='/account-page/:id'>
             <AccountPage />
-          </Route>
+          </Route> */}
         </Switch>
       </UserContext.Provider>
     </div>
