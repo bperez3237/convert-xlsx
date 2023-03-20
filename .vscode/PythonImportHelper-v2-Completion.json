@@ -16,11 +16,35 @@
         "documentation": {}
     },
     {
-        "label": "User",
-        "importPath": "django.contrib.auth.models",
-        "description": "django.contrib.auth.models",
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
         "isExtraImport": true,
-        "detail": "django.contrib.auth.models",
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "admin",
+        "importPath": "django.contrib",
+        "description": "django.contrib",
+        "isExtraImport": true,
+        "detail": "django.contrib",
         "documentation": {}
     },
     {
@@ -48,6 +72,38 @@
         "documentation": {}
     },
     {
+        "label": "AppConfig",
+        "importPath": "django.apps",
+        "description": "django.apps",
+        "isExtraImport": true,
+        "detail": "django.apps",
+        "documentation": {}
+    },
+    {
+        "label": "GenericForeignKey",
+        "importPath": "django.contrib.contenttypes.fields",
+        "description": "django.contrib.contenttypes.fields",
+        "isExtraImport": true,
+        "detail": "django.contrib.contenttypes.fields",
+        "documentation": {}
+    },
+    {
+        "label": "ContentType",
+        "importPath": "django.contrib.contenttypes.models",
+        "description": "django.contrib.contenttypes.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.contenttypes.models",
+        "documentation": {}
+    },
+    {
+        "label": "TestCase",
+        "importPath": "django.test",
+        "description": "django.test",
+        "isExtraImport": true,
+        "detail": "django.test",
+        "documentation": {}
+    },
+    {
         "label": "TestCase",
         "importPath": "django.test",
         "description": "django.test",
@@ -64,6 +120,14 @@
         "documentation": {}
     },
     {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
         "label": "include",
         "importPath": "django.urls",
         "description": "django.urls",
@@ -85,6 +149,121 @@
         "description": "django.urls",
         "isExtraImport": true,
         "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "csrf_exempt",
+        "importPath": "django.views.decorators.csrf",
+        "description": "django.views.decorators.csrf",
+        "isExtraImport": true,
+        "detail": "django.views.decorators.csrf",
+        "documentation": {}
+    },
+    {
+        "label": "render",
+        "importPath": "django.shortcuts",
+        "description": "django.shortcuts",
+        "isExtraImport": true,
+        "detail": "django.shortcuts",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "rest_framework.response",
+        "description": "rest_framework.response",
+        "isExtraImport": true,
+        "detail": "rest_framework.response",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "rest_framework.response",
+        "description": "rest_framework.response",
+        "isExtraImport": true,
+        "detail": "rest_framework.response",
+        "documentation": {}
+    },
+    {
+        "label": "HttpResponse",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
+        "documentation": {}
+    },
+    {
+        "label": "HttpRequest",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
+        "documentation": {}
+    },
+    {
+        "label": "JsonResponse",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
+        "documentation": {}
+    },
+    {
+        "label": "FileResponse",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
+        "documentation": {}
+    },
+    {
+        "label": "HTTP_200_OK",
+        "importPath": "rest_framework.status",
+        "description": "rest_framework.status",
+        "isExtraImport": true,
+        "detail": "rest_framework.status",
+        "documentation": {}
+    },
+    {
+        "label": "HTTP_200_OK",
+        "importPath": "rest_framework.status",
+        "description": "rest_framework.status",
+        "isExtraImport": true,
+        "detail": "rest_framework.status",
+        "documentation": {}
+    },
+    {
+        "label": "xlsxwriter",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "xlsxwriter",
+        "description": "xlsxwriter",
+        "detail": "xlsxwriter",
+        "documentation": {}
+    },
+    {
+        "label": "pandas",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pandas",
+        "description": "pandas",
+        "detail": "pandas",
+        "documentation": {}
+    },
+    {
+        "label": "io",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "io",
+        "description": "io",
+        "detail": "io",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "importPath": "django.contrib.auth.models",
+        "description": "django.contrib.auth.models",
+        "isExtraImport": true,
+        "detail": "django.contrib.auth.models",
         "documentation": {}
     },
     {
@@ -125,22 +304,6 @@
         "description": "rest_framework.mixins",
         "isExtraImport": true,
         "detail": "rest_framework.mixins",
-        "documentation": {}
-    },
-    {
-        "label": "Response",
-        "importPath": "rest_framework.response",
-        "description": "rest_framework.response",
-        "isExtraImport": true,
-        "detail": "rest_framework.response",
-        "documentation": {}
-    },
-    {
-        "label": "HTTP_200_OK",
-        "importPath": "rest_framework.status",
-        "description": "rest_framework.status",
-        "isExtraImport": true,
-        "detail": "rest_framework.status",
         "documentation": {}
     },
     {
@@ -217,6 +380,76 @@
         "description": "django.core",
         "isExtraImport": true,
         "detail": "django.core",
+        "documentation": {}
+    },
+    {
+        "label": "ZipFile",
+        "importPath": "zipfile",
+        "description": "zipfile",
+        "isExtraImport": true,
+        "detail": "zipfile",
+        "documentation": {}
+    },
+    {
+        "label": "BadZipfile",
+        "importPath": "zipfile",
+        "description": "zipfile",
+        "isExtraImport": true,
+        "detail": "zipfile",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "server.api.migrations.0001_initial",
+        "description": "server.api.migrations.0001_initial",
+        "peekOfCode": "class Migration(migrations.Migration):\n    initial = True\n    dependencies = [\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='User',\n            fields=[\n                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),\n                ('username', models.CharField(max_length=50)),",
+        "detail": "server.api.migrations.0001_initial",
+        "documentation": {}
+    },
+    {
+        "label": "ApiConfig",
+        "kind": 6,
+        "importPath": "server.api.apps",
+        "description": "server.api.apps",
+        "peekOfCode": "class ApiConfig(AppConfig):\n    default_auto_field = 'django.db.models.BigAutoField'\n    name = 'api'",
+        "detail": "server.api.apps",
+        "documentation": {}
+    },
+    {
+        "label": "User",
+        "kind": 6,
+        "importPath": "server.api.models",
+        "description": "server.api.models",
+        "peekOfCode": "class User(models.Model):\n    username = models.CharField(max_length=50)\n    password = models.CharField(max_length=50)\n    email = models.CharField(max_length=50)",
+        "detail": "server.api.models",
+        "documentation": {}
+    },
+    {
+        "label": "urlpatterns",
+        "kind": 5,
+        "importPath": "server.api.urls",
+        "description": "server.api.urls",
+        "peekOfCode": "urlpatterns = [\n    path('upload/', csrf_exempt(views.index)),\n    path('test/', views.test)\n]",
+        "detail": "server.api.urls",
+        "documentation": {}
+    },
+    {
+        "label": "index",
+        "kind": 2,
+        "importPath": "server.api.views",
+        "description": "server.api.views",
+        "peekOfCode": "def index(request):\n    print('starting index request')\n    # print(request.FILES)\n    if \"POST\" == request.method and request.FILES:\n        excel_file = request.FILES['file']\n        sheet = pd.read_excel(excel_file)\n        print(sheet)\n        output = io.BytesIO()\n        # you may put validations here to check extension or file size\n        workbook = xlsxwriter.Workbook(output)",
+        "detail": "server.api.views",
+        "documentation": {}
+    },
+    {
+        "label": "test",
+        "kind": 2,
+        "importPath": "server.api.views",
+        "description": "server.api.views",
+        "peekOfCode": "def test(request):\n    print('j')\n    return JsonResponse({'message': 'testing'})",
+        "detail": "server.api.views",
         "documentation": {}
     },
     {
@@ -323,7 +556,7 @@
         "kind": 5,
         "importPath": "server.server.settings",
         "description": "server.server.settings",
-        "peekOfCode": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'rest_framework',\n    'rest_framework_simplejwt.token_blacklist',\n    'public'",
+        "peekOfCode": "INSTALLED_APPS = [\n    'django.contrib.admin',\n    'django.contrib.auth',\n    'django.contrib.contenttypes',\n    'django.contrib.sessions',\n    'django.contrib.messages',\n    'django.contrib.staticfiles',\n    'rest_framework',\n    'rest_framework_simplejwt.token_blacklist',\n    'public',",
         "detail": "server.server.settings",
         "documentation": {}
     },
@@ -485,7 +718,7 @@
         "kind": 5,
         "importPath": "server.server.urls",
         "description": "server.server.urls",
-        "peekOfCode": "urlpatterns = [\n    path('admin/', admin.site.urls),\n    path('', include('public.urls'))\n]",
+        "peekOfCode": "urlpatterns = [\n    path('admin/', admin.site.urls),\n    path('public/', include('public.urls')),\n    path('api/', include('api.urls')),\n]",
         "detail": "server.server.urls",
         "documentation": {}
     },
@@ -568,6 +801,15 @@
         "description": "server.venv.bin.activate_this",
         "peekOfCode": "sys.prefix = base",
         "detail": "server.venv.bin.activate_this",
+        "documentation": {}
+    },
+    {
+        "label": "vba_filename",
+        "kind": 5,
+        "importPath": "server.venv.bin.vba_extract",
+        "description": "server.venv.bin.vba_extract",
+        "peekOfCode": "vba_filename = 'vbaProject.bin'\n# Get the xlsm file name from the commandline.\nif len(sys.argv) > 1:\n    xlsm_file = sys.argv[1]\nelse:\n    print(\"\\nUtility to extract a vbaProject.bin binary from an Excel 2007+ \"\n          \"xlsm macro file for insertion into an XlsxWriter file.\"\n          \"\\n\"\n          \"See: https://xlsxwriter.readthedocs.io/working_with_macros.html\\n\"\n          \"\\n\"",
+        "detail": "server.venv.bin.vba_extract",
         "documentation": {}
     },
     {
