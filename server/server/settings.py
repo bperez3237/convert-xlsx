@@ -30,7 +30,7 @@ ALLOWED_HOSTS = ["127.0.0.1", "localhost", "192.168.0.12"]
 # IMPORTANT STUFF
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
+    # 'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -40,7 +40,10 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'public',
     'api',
+    'accounts',
 ]
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -172,3 +175,4 @@ CORS_ALLOW_CREDENTIALS = True
 # NOTE:
 # change 'https://example-prod-react.com' to your frontend domain
 CORS_ORIGIN_WHITELIST = ['http://localhost:3000', 'https://example-prod-react.com']
+
